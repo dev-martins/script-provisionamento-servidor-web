@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  sps-web:
+    container_name: sps-web
+    build:
+      context: "."
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 89:80
+    restart: unless-stopped
+    tty: true
+    dns:
+      - 8.8.8.8
+    command: /bin/bash -c "cd /var/www/html && git clone https://github.com/denilsonbonatti/linux-site-dio.git  && apachectl -D FOREGROUND"
